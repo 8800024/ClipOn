@@ -1,3 +1,5 @@
+using System;
+using System.Data;
 using System.Data.SQLite;
 
 namespace WinFormsApp1
@@ -13,7 +15,7 @@ namespace WinFormsApp1
         Ticket t = new Ticket();
 
         public string path = "dataTable.db";
-        public string cs = @"URI=file" + Path.Combine(Application.StartupPath + "\\dataTable.db");
+        public string cs = @" Data Source=" + Path.Combine(Application.StartupPath + "\\dataTable.db");
 
         SQLiteConnection? con;
         SQLiteCommand? cmd;
@@ -24,7 +26,9 @@ namespace WinFormsApp1
             CreateDB();
         }
 
-        // DB を作成
+        /// <summary>
+        ///  DB を作成
+        /// </summary>
         private void CreateDB()
         {
             if (!System.IO.File.Exists(path))
@@ -42,36 +46,60 @@ namespace WinFormsApp1
                 return;
         }
 
-        private void DataShow()
-        {
-            var con = new SQLiteConnection(cs);
-            con.Open();
-            string stm = "SELECT * FROM Topicks";
-            var cmd = new SQLiteCommand(stm, con);
-            dr = cmd.ExecuteReader();
-
-            while (dr.Read())
-            {
-                // ここで DB から読みだしたデータを使って処理をする
-            }
-        }
-
         private void button1_Click(object sender, EventArgs e)
         {
             detail.ShowDialog();
-            GenerateTicket();
+            if (string.IsNullOrEmpty(detail.person) | string.IsNullOrEmpty(detail.description))
+                return;
+            else
+                AddParam();
+                GenerateTicket();
+        }
+
+        private void AddParam()
+        {
+            string add = $"Insert Into Topicks(date, person, description) Values('{detail.date}','{detail.person}','{detail.description}')";
+
+            using (var con = new SQLiteConnection(cs))
+            {
+                con.Open();
+                using (var cmd = new SQLiteCommand(add, con))
+                {
+                    cmd.ExecuteNonQuery();
+                }
+                con!.Close();
+            }
         }
 
         private void GenerateTicket()
         {
-            flowLayoutPanel1.Controls.Add(t);
-            t.labelTicketDate.Text = detail.date;
-            t.labelTicketPerson.Text = detail.person;
-            t.labelTicketDescription.Text = detail.description;
-            t.Show();
-
-            t.BringToFront();
+            using (var con = new SQLiteConnection(cs))
+            {
+                con.Open();
+                var sql = "SELECT * FROM Topicks";
+                using (var cmd = new SQLiteCommand(sql, con))
+                {
+                    using(var dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            flowLayoutPanel1.Controls.Add(t);
+                            t.labelTicketDate.Text = (string)dr["date"];
+                            t.labelTicketPerson.Text = (string)dr["person"];
+                            t.labelTicketDescription.Text = (string)dr["description"];
+                            t.Show();
+                            t.BringToFront();
+                        }
+                        dr!.Close();
+                    }
+                }
+                con!.Close();
+            }
         }
 
+        private void flowLayoutPanel1_ControlRemoved(object sender, ControlEventArgs e)
+        {
+            MessageBox.Show("Control is Removed.");
+        }
     }
 }

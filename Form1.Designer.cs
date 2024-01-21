@@ -49,6 +49,7 @@
             flowLayoutPanel1.Name = "flowLayoutPanel1";
             flowLayoutPanel1.Size = new Size(360, 401);
             flowLayoutPanel1.TabIndex = 3;
+            flowLayoutPanel1.ControlRemoved += flowLayoutPanel1_ControlRemoved;
             // 
             // Form1
             // 
@@ -61,6 +62,7 @@
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "Form1";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Form1";
             Load += Form1_Load;
             ResumeLayout(false);

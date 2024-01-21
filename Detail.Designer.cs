@@ -30,12 +30,12 @@
         {
             buttonSubmit = new Button();
             textBoxPerson = new TextBox();
-            textBoxDetail = new TextBox();
+            textBoxDescription = new TextBox();
             label1 = new Label();
             label2 = new Label();
             label3 = new Label();
             monthCalendar1 = new MonthCalendar();
-            label4 = new Label();
+            labelStrCount = new Label();
             SuspendLayout();
             // 
             // buttonSubmit
@@ -56,15 +56,15 @@
             textBoxPerson.Size = new Size(200, 25);
             textBoxPerson.TabIndex = 1;
             // 
-            // textBoxDetail
+            // textBoxDescription
             // 
-            textBoxDetail.Font = new Font("Yu Gothic UI", 10F);
-            textBoxDetail.Location = new Point(12, 282);
-            textBoxDetail.Multiline = true;
-            textBoxDetail.Name = "textBoxDetail";
-            textBoxDetail.Size = new Size(336, 71);
-            textBoxDetail.TabIndex = 2;
-            textBoxDetail.TextChanged += textBoxDetail_TextChanged;
+            textBoxDescription.Font = new Font("Yu Gothic UI", 10F);
+            textBoxDescription.Location = new Point(12, 282);
+            textBoxDescription.Multiline = true;
+            textBoxDescription.Name = "textBoxDescription";
+            textBoxDescription.Size = new Size(336, 71);
+            textBoxDescription.TabIndex = 2;
+            textBoxDescription.TextChanged += textBoxDetail_TextChanged;
             // 
             // label1
             // 
@@ -103,27 +103,27 @@
             monthCalendar1.Name = "monthCalendar1";
             monthCalendar1.TabIndex = 7;
             // 
-            // label4
+            // labelStrCount
             // 
-            label4.AutoSize = true;
-            label4.Font = new Font("Yu Gothic UI", 9F);
-            label4.Location = new Point(267, 356);
-            label4.Name = "label4";
-            label4.Size = new Size(81, 15);
-            label4.TabIndex = 8;
-            label4.Text = "残り ：72 文字";
+            labelStrCount.AutoSize = true;
+            labelStrCount.Font = new Font("Yu Gothic UI", 9F);
+            labelStrCount.Location = new Point(267, 356);
+            labelStrCount.Name = "labelStrCount";
+            labelStrCount.Size = new Size(81, 15);
+            labelStrCount.TabIndex = 8;
+            labelStrCount.Text = "残り ：72 文字";
             // 
             // Detail
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(360, 455);
-            Controls.Add(label4);
+            Controls.Add(labelStrCount);
             Controls.Add(monthCalendar1);
             Controls.Add(label3);
             Controls.Add(label2);
             Controls.Add(label1);
-            Controls.Add(textBoxDetail);
+            Controls.Add(textBoxDescription);
             Controls.Add(textBoxPerson);
             Controls.Add(buttonSubmit);
             FormBorderStyle = FormBorderStyle.FixedSingle;
@@ -137,11 +137,11 @@
 
         private Button buttonSubmit;
         private TextBox textBoxPerson;
-        private TextBox textBoxDetail;
+        private TextBox textBoxDescription;
         private Label label1;
         private Label label2;
         private Label label3;
         private MonthCalendar monthCalendar1;
-        private Label label4;
+        private Label labelStrCount;
     }
 }

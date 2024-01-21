@@ -1,14 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-
-namespace WinFormsApp1
+﻿namespace WinFormsApp1
 {
     public partial class Detail : Form
     {
@@ -16,8 +6,6 @@ namespace WinFormsApp1
         {
             InitializeComponent();
         }
-
-
 
         public string date { get; private set; } = "";
         public string person { get; private set; } = "";
@@ -27,22 +15,24 @@ namespace WinFormsApp1
         {
             date = monthCalendar1.SelectionEnd.ToShortDateString();
             person = textBoxPerson.Text;
-            description = textBoxDetail.Text;
-            if (string.IsNullOrEmpty(person) | string.IsNullOrEmpty(description))
+            description = textBoxDescription.Text;
+            if ( string.IsNullOrEmpty(person) | string.IsNullOrEmpty(description))
             {
-                MessageBox.Show("None.");
+                MessageBox.Show("データを入力してください。");
                 return;
             }
 
-            MessageBox.Show("予定を追加しました。\r\n" + description);
+            MessageBox.Show("予定を追加しました。\r\n[" + description + "]");
             textBoxPerson.Clear();
-            textBoxDetail.Clear();
+            textBoxDescription.Clear();
             this.Close();
         }
 
         private void textBoxDetail_TextChanged(object sender, EventArgs e)
         {
-
+            const int COUNT = 72;
+            int count = COUNT - textBoxDescription.Text.Length;
+            labelStrCount.Text = $"残り：{count} 文字";
         }
     }
 }
