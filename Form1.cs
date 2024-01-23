@@ -1,5 +1,3 @@
-using System;
-using System.Data;
 using System.Data.SQLite;
 
 namespace WinFormsApp1
@@ -53,7 +51,7 @@ namespace WinFormsApp1
                 return;
             else
                 AddParam();
-                GenerateTicket();
+            GenerateTicket();
         }
 
         private void AddParam()
@@ -67,7 +65,7 @@ namespace WinFormsApp1
                 {
                     cmd.ExecuteNonQuery();
                 }
-                con!.Close();
+                //con!.Close();
             }
         }
 
@@ -79,8 +77,9 @@ namespace WinFormsApp1
                 var sql = "SELECT * FROM Topicks";
                 using (var cmd = new SQLiteCommand(sql, con))
                 {
-                    using(var dr = cmd.ExecuteReader())
+                    using (var dr = cmd.ExecuteReader())
                     {
+
                         while (dr.Read())
                         {
                             flowLayoutPanel1.Controls.Add(t);
@@ -90,16 +89,40 @@ namespace WinFormsApp1
                             t.Show();
                             t.BringToFront();
                         }
-                        dr!.Close();
+                        //dr!.Close();
                     }
                 }
-                con!.Close();
+                //con!.Close();
             }
         }
 
         private void flowLayoutPanel1_ControlRemoved(object sender, ControlEventArgs e)
         {
             MessageBox.Show("Control is Removed.");
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            using (var con = new SQLiteConnection(cs))
+            {
+                con.Open();
+                var sql = "SELECT * FROM Topicks";
+                using (var cmd = new SQLiteCommand(sql, con))
+                {
+                    using (var dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            string? dateValue = dr["date"].ToString();
+                            string? personValue = dr["person"].ToString();
+                            string? descValue = dr["description"].ToString();
+                            MessageBox.Show($"date:{dateValue},\r\nperson:{personValue},\r\ndescription:{descValue}");
+
+                        }
+
+                    }
+                }
+            }
         }
     }
 }
