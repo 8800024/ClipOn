@@ -30,7 +30,6 @@
         {
             button1 = new Button();
             flowLayoutPanel1 = new FlowLayoutPanel();
-            button2 = new Button();
             SuspendLayout();
             // 
             // button1
@@ -46,28 +45,17 @@
             // flowLayoutPanel1
             // 
             flowLayoutPanel1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            flowLayoutPanel1.AutoScroll = true;
             flowLayoutPanel1.Location = new Point(0, 60);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
-            flowLayoutPanel1.Size = new Size(360, 401);
+            flowLayoutPanel1.Size = new Size(380, 401);
             flowLayoutPanel1.TabIndex = 3;
-            flowLayoutPanel1.ControlRemoved += flowLayoutPanel1_ControlRemoved;
-            // 
-            // button2
-            // 
-            button2.Location = new Point(267, 12);
-            button2.Name = "button2";
-            button2.Size = new Size(81, 42);
-            button2.TabIndex = 4;
-            button2.Text = "DB";
-            button2.UseVisualStyleBackColor = true;
-            button2.Click += button2_Click;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(360, 461);
-            Controls.Add(button2);
+            ClientSize = new Size(380, 461);
             Controls.Add(flowLayoutPanel1);
             Controls.Add(button1);
             FormBorderStyle = FormBorderStyle.FixedSingle;
@@ -83,6 +71,5 @@
         #endregion
         private Button button1;
         private FlowLayoutPanel flowLayoutPanel1;
-        private Button button2;
     }
 }

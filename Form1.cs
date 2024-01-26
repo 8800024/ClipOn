@@ -15,13 +15,12 @@ namespace WinFormsApp1
         public string path = "dataTable.db";
         public string cs = @" Data Source=" + Path.Combine(Application.StartupPath + "\\dataTable.db");
 
-        SQLiteConnection? con;
-        SQLiteCommand? cmd;
-        SQLiteDataReader? dr;
-
         private void Form1_Load(object sender, EventArgs e)
         {
             CreateDB();
+            CountRecord();
+            GenerateTicket();
+
         }
 
         /// <summary>
@@ -35,13 +34,11 @@ namespace WinFormsApp1
                 using (var sqlite = new SQLiteConnection(@" Data Source=" + path))
                 {
                     sqlite.Open();
-                    string sql = "CREATE TABLE Topicks(date TEXT, person TEXT, description TEXT)";
+                    string sql = "CREATE TABLE Topicks(Id INTEGER, Date TEXT, Person TEXT, Description TEXT)";
                     SQLiteCommand command = new SQLiteCommand(sql, sqlite);
                     command.ExecuteNonQuery();
                 }
             }
-            else
-                return;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -56,7 +53,7 @@ namespace WinFormsApp1
 
         private void AddParam()
         {
-            string add = $"Insert Into Topicks(date, person, description) Values('{detail.date}','{detail.person}','{detail.description}')";
+            string add = $"Insert Into Topicks(Id, Date, Person, Description) Values('{detail.count}','{detail.date}','{detail.person}','{detail.description}')";
 
             using (var con = new SQLiteConnection(cs))
             {
@@ -65,12 +62,25 @@ namespace WinFormsApp1
                 {
                     cmd.ExecuteNonQuery();
                 }
-                //con!.Close();
+            }
+        }
+
+        private void CountRecord()
+        {
+            using (var con = new SQLiteConnection(cs))
+            {
+                con.Open();
+                var sql = "SELECT coalesce(max(id), 0) + 1 FROM Topicks";
+                using (var cmd = new SQLiteCommand(sql, con))
+                {
+                    int count = Convert.ToInt32(cmd.ExecuteScalar());
+                }
             }
         }
 
         private void GenerateTicket()
         {
+            flowLayoutPanel1.Controls.Clear();
             using (var con = new SQLiteConnection(cs))
             {
                 con.Open();
@@ -82,44 +92,16 @@ namespace WinFormsApp1
 
                         while (dr.Read())
                         {
+                            Ticket t = new Ticket();
+                            t.SetData(
+                                Convert.ToInt32(dr["Id"]),
+                                (string)dr["Date"],
+                                (string)dr["Person"],
+                                (string)dr["Description"]);
                             flowLayoutPanel1.Controls.Add(t);
-                            t.labelTicketDate.Text = (string)dr["date"];
-                            t.labelTicketPerson.Text = (string)dr["person"];
-                            t.labelTicketDescription.Text = (string)dr["description"];
                             t.Show();
                             t.BringToFront();
                         }
-                        //dr!.Close();
-                    }
-                }
-                //con!.Close();
-            }
-        }
-
-        private void flowLayoutPanel1_ControlRemoved(object sender, ControlEventArgs e)
-        {
-            MessageBox.Show("Control is Removed.");
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            using (var con = new SQLiteConnection(cs))
-            {
-                con.Open();
-                var sql = "SELECT * FROM Topicks";
-                using (var cmd = new SQLiteCommand(sql, con))
-                {
-                    using (var dr = cmd.ExecuteReader())
-                    {
-                        while (dr.Read())
-                        {
-                            string? dateValue = dr["date"].ToString();
-                            string? personValue = dr["person"].ToString();
-                            string? descValue = dr["description"].ToString();
-                            MessageBox.Show($"date:{dateValue},\r\nperson:{personValue},\r\ndescription:{descValue}");
-
-                        }
-
                     }
                 }
             }

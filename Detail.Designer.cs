@@ -129,6 +129,7 @@
             FormBorderStyle = FormBorderStyle.FixedSingle;
             Name = "Detail";
             Text = "Detail";
+            Load += Detail_Load;
             ResumeLayout(false);
             PerformLayout();
         }

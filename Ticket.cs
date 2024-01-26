@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.Data.SQLite;
 
 namespace WinFormsApp1
 {
@@ -17,10 +9,39 @@ namespace WinFormsApp1
             InitializeComponent();
         }
 
-        
+        int TicketId = 0;
+        public string cs = @" Data Source=" + Path.Combine(Application.StartupPath + "\\dataTable.db");
+
         private void buttonDelete_Click(object sender, EventArgs e)
         {
-            this.Dispose();
+            DeleteTicketFromDatabase();
+            Parent.Controls.Remove(this);
+            var sql = $"DELETE FROM Topicks WHERE id = {TicketId}";
+
         }
+
+        private void DeleteTicketFromDatabase()
+        {
+            using (var con = new SQLiteConnection(cs))
+            {
+                con.Open();
+                var sql = "DELETE FROM Topicks WHERE id = @id";
+                using (var cmd = new SQLiteCommand(sql, con))
+                {
+                    cmd.Parameters.AddWithValue("@id", TicketId);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public void SetData(int id, string date, string person, string description)
+        {
+            TicketId = id;
+            labelCount.Text = TicketId.ToString();
+            labelTicketDate.Text = date;
+            labelTicketPerson.Text = person;
+            labelTicketDescription.Text = description;
+        }
+
     }
 }
