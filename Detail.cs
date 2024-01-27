@@ -7,15 +7,9 @@
             InitializeComponent();
         }
 
-        public int count { get; set; } = 0;
         public string date { get; private set; } = "";
         public string person { get; private set; } = "";
         public string description { get; private set; } = "";
-
-        private void Detail_Load(object sender, EventArgs e)
-        {
-
-        }
 
         private void buttonEntry_Click(object sender, EventArgs e)
         {

@@ -43,7 +43,7 @@
             buttonSubmit.Location = new Point(267, 399);
             buttonSubmit.Name = "buttonSubmit";
             buttonSubmit.Size = new Size(81, 44);
-            buttonSubmit.TabIndex = 0;
+            buttonSubmit.TabIndex = 20;
             buttonSubmit.Text = "登録";
             buttonSubmit.UseVisualStyleBackColor = true;
             buttonSubmit.Click += buttonEntry_Click;
@@ -54,7 +54,7 @@
             textBoxPerson.Location = new Point(12, 223);
             textBoxPerson.Name = "textBoxPerson";
             textBoxPerson.Size = new Size(200, 25);
-            textBoxPerson.TabIndex = 1;
+            textBoxPerson.TabIndex = 10;
             // 
             // textBoxDescription
             // 
@@ -63,7 +63,7 @@
             textBoxDescription.Multiline = true;
             textBoxDescription.Name = "textBoxDescription";
             textBoxDescription.Size = new Size(336, 71);
-            textBoxDescription.TabIndex = 2;
+            textBoxDescription.TabIndex = 12;
             textBoxDescription.TextChanged += textBoxDetail_TextChanged;
             // 
             // label1
@@ -73,7 +73,7 @@
             label1.Location = new Point(12, 8);
             label1.Name = "label1";
             label1.Size = new Size(31, 15);
-            label1.TabIndex = 4;
+            label1.TabIndex = 44;
             label1.Text = "日付";
             // 
             // label2
@@ -83,7 +83,7 @@
             label2.Location = new Point(12, 205);
             label2.Name = "label2";
             label2.Size = new Size(43, 15);
-            label2.TabIndex = 5;
+            label2.TabIndex = 55;
             label2.Text = "対象者";
             // 
             // label3
@@ -93,7 +93,7 @@
             label3.Location = new Point(12, 264);
             label3.Name = "label3";
             label3.Size = new Size(65, 15);
-            label3.TabIndex = 6;
+            label3.TabIndex = 66;
             label3.Text = "予定の説明";
             // 
             // monthCalendar1
@@ -110,7 +110,7 @@
             labelStrCount.Location = new Point(267, 356);
             labelStrCount.Name = "labelStrCount";
             labelStrCount.Size = new Size(81, 15);
-            labelStrCount.TabIndex = 8;
+            labelStrCount.TabIndex = 88;
             labelStrCount.Text = "残り ：72 文字";
             // 
             // Detail
@@ -129,7 +129,6 @@
             FormBorderStyle = FormBorderStyle.FixedSingle;
             Name = "Detail";
             Text = "Detail";
-            Load += Detail_Load;
             ResumeLayout(false);
             PerformLayout();
         }

@@ -37,7 +37,6 @@ namespace WinFormsApp1
         public void SetData(int id, string date, string person, string description)
         {
             TicketId = id;
-            labelCount.Text = TicketId.ToString();
             labelTicketDate.Text = date;
             labelTicketPerson.Text = person;
             labelTicketDescription.Text = description;

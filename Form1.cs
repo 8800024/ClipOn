@@ -10,7 +10,6 @@ namespace WinFormsApp1
         }
 
         Detail detail = new Detail();
-        Ticket t = new Ticket();
 
         public string path = "dataTable.db";
         public string cs = @" Data Source=" + Path.Combine(Application.StartupPath + "\\dataTable.db");
@@ -18,13 +17,12 @@ namespace WinFormsApp1
         private void Form1_Load(object sender, EventArgs e)
         {
             CreateDB();
-            CountRecord();
             GenerateTicket();
 
         }
 
         /// <summary>
-        ///  DB ÇçÏê¨
+        ///  DBÇ™ë∂ç›ÇµÇ»Ç¢èÍçáÅADB ÇçÏê¨
         /// </summary>
         private void CreateDB()
         {
@@ -34,7 +32,7 @@ namespace WinFormsApp1
                 using (var sqlite = new SQLiteConnection(@" Data Source=" + path))
                 {
                     sqlite.Open();
-                    string sql = "CREATE TABLE Topicks(Id INTEGER, Date TEXT, Person TEXT, Description TEXT)";
+                    string sql = "CREATE TABLE Topicks(Id INTEGER PRIMARY KEY, Date TEXT, Person TEXT, Description TEXT)";
                     SQLiteCommand command = new SQLiteCommand(sql, sqlite);
                     command.ExecuteNonQuery();
                 }
@@ -53,7 +51,7 @@ namespace WinFormsApp1
 
         private void AddParam()
         {
-            string add = $"Insert Into Topicks(Id, Date, Person, Description) Values('{detail.count}','{detail.date}','{detail.person}','{detail.description}')";
+            string add = $"Insert Into Topicks(Date, Person, Description) Values('{detail.date}','{detail.person}','{detail.description}')";
 
             using (var con = new SQLiteConnection(cs))
             {
@@ -61,19 +59,6 @@ namespace WinFormsApp1
                 using (var cmd = new SQLiteCommand(add, con))
                 {
                     cmd.ExecuteNonQuery();
-                }
-            }
-        }
-
-        private void CountRecord()
-        {
-            using (var con = new SQLiteConnection(cs))
-            {
-                con.Open();
-                var sql = "SELECT coalesce(max(id), 0) + 1 FROM Topicks";
-                using (var cmd = new SQLiteCommand(sql, con))
-                {
-                    int count = Convert.ToInt32(cmd.ExecuteScalar());
                 }
             }
         }

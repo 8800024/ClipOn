@@ -63,7 +63,7 @@
             MinimizeBox = false;
             Name = "Form1";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Form1";
+            Text = "ClipOn";
             Load += Form1_Load;
             ResumeLayout(false);
         }

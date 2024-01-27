@@ -32,7 +32,6 @@
             labelTicketDate = new Label();
             labelTicketPerson = new Label();
             labelTicketDescription = new Label();
-            labelCount = new Label();
             SuspendLayout();
             // 
             // buttonDelete
@@ -75,22 +74,11 @@
             labelTicketDescription.TabIndex = 3;
             labelTicketDescription.Text = "label3";
             // 
-            // labelCount
-            // 
-            labelCount.AutoSize = true;
-            labelCount.Font = new Font("Yu Gothic UI", 10F);
-            labelCount.Location = new Point(266, 8);
-            labelCount.Name = "labelCount";
-            labelCount.Size = new Size(45, 19);
-            labelCount.TabIndex = 4;
-            labelCount.Text = "label3";
-            // 
             // Ticket
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ActiveCaption;
-            Controls.Add(labelCount);
             Controls.Add(labelTicketDescription);
             Controls.Add(labelTicketPerson);
             Controls.Add(labelTicketDate);
@@ -107,6 +95,5 @@
         public Label labelTicketDate;
         public Label labelTicketPerson;
         public Label labelTicketDescription;
-        public Label labelCount;
     }
 }
