@@ -9,11 +9,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Icon.ico" />
     <None Remove="ImageFile\Icon_Erase.png" />
     <None Remove="ImageFile\Icon_Pen.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Icon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="ImageFile\Icon_Erase.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>

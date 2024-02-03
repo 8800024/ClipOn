@@ -5,13 +5,73 @@ namespace WinFormsApp1
 {
     public partial class Form1 : Form
     {
+        private NotifyIcon? notifyIcon;
+        Detail detail = new Detail();
+        TicketData ticketData = new TicketData();
         public Form1()
         {
             InitializeComponent();
+            InitializeTrayIcon();
         }
 
-        Detail detail = new Detail();
-        TicketData ticketData = new TicketData();
+        private void InitializeTrayIcon()
+        {
+            notifyIcon = new NotifyIcon
+            {
+                Icon = new Icon("Icon.ico"),
+                Visible = true
+            };
+
+            notifyIcon.Click += NotifyIcon_Click;
+
+            var contextMenu = new ContextMenuStrip();
+            contextMenu.Items.Add("表示", null, ShowFormClick);
+            contextMenu.Items.Add("終了", null, ExitClick);
+            notifyIcon.ContextMenuStrip = contextMenu;
+        }
+
+        private void ShowFormClick(object? sender, EventArgs e)
+        {
+            ShowForm();
+        }
+
+        private void ExitClick(object? sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void NotifyIcon_Click(object? sender, EventArgs e)
+        {
+            if (e is MouseEventArgs mouseEventArgs && mouseEventArgs.Button == MouseButtons.Left)
+            {
+                ShowForm();
+            }
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+                e.Cancel = true;
+                WindowState = FormWindowState.Minimized;
+                ShowInTaskbar = false;
+            }
+            else if (e.CloseReason == CloseReason.ApplicationExitCall)
+            {
+                // 通知アイコンからの終了処理の場合は何もしない
+            }
+        }
+        private void ShowForm()
+        {
+            if (WindowState == FormWindowState.Minimized)
+            {
+                WindowState = FormWindowState.Normal;
+                ShowInTaskbar = true;
+            }
+
+            Activate();
+        }
+
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -77,7 +137,6 @@ namespace WinFormsApp1
                 }
             }
         }
-
 
     }
 }

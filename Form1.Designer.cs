@@ -65,8 +65,9 @@
             StartPosition = FormStartPosition.CenterScreen;
             Text = "ClipOn";
             Activated += Form1_Activated;
+            FormClosing += Form1_FormClosing;
             Load += Form1_Load;
-            ResumeLayout(false);
+             ResumeLayout(false);
         }
 
         #endregion
