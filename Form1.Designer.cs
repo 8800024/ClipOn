@@ -64,6 +64,7 @@
             Name = "Form1";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "ClipOn";
+            Activated += Form1_Activated;
             Load += Form1_Load;
             ResumeLayout(false);
         }

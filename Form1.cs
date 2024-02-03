@@ -1,3 +1,4 @@
+using ClipOn;
 using System.Data.SQLite;
 
 namespace WinFormsApp1
@@ -10,15 +11,16 @@ namespace WinFormsApp1
         }
 
         Detail detail = new Detail();
-
-        public string path = "dataTable.db";
-        public string cs = @" Data Source=" + Path.Combine(Application.StartupPath + "\\dataTable.db");
+        TicketData ticketData = new TicketData();
 
         private void Form1_Load(object sender, EventArgs e)
         {
             CreateDB();
-            GenerateTicket();
+        }
 
+        private void Form1_Activated(object sender, EventArgs e)
+        {
+            GenerateTicket();
         }
 
         /// <summary>
@@ -26,6 +28,7 @@ namespace WinFormsApp1
         /// </summary>
         private void CreateDB()
         {
+            string path = "dataTable.db";
             if (!System.IO.File.Exists(path))
             {
                 SQLiteConnection.CreateFile(path);
@@ -42,31 +45,15 @@ namespace WinFormsApp1
         private void button1_Click(object sender, EventArgs e)
         {
             detail.ShowDialog();
-            if (string.IsNullOrEmpty(detail.person) | string.IsNullOrEmpty(detail.description))
-                return;
-            else
-                AddParam();
-            GenerateTicket();
         }
 
-        private void AddParam()
-        {
-            string add = $"Insert Into Topicks(Date, Person, Description) Values('{detail.date}','{detail.person}','{detail.description}')";
-
-            using (var con = new SQLiteConnection(cs))
-            {
-                con.Open();
-                using (var cmd = new SQLiteCommand(add, con))
-                {
-                    cmd.ExecuteNonQuery();
-                }
-            }
-        }
-
+        /// <summary>
+        /// DB からレコードを読み出してユーザーコントロールを連続描画
+        /// </summary>
         private void GenerateTicket()
         {
             flowLayoutPanel1.Controls.Clear();
-            using (var con = new SQLiteConnection(cs))
+            using (var con = new SQLiteConnection(ticketData.cs))
             {
                 con.Open();
                 var sql = "SELECT * FROM Topicks";
@@ -74,7 +61,6 @@ namespace WinFormsApp1
                 {
                     using (var dr = cmd.ExecuteReader())
                     {
-
                         while (dr.Read())
                         {
                             Ticket t = new Ticket();
@@ -91,5 +77,7 @@ namespace WinFormsApp1
                 }
             }
         }
+
+
     }
 }
